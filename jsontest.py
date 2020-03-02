@@ -22,7 +22,7 @@ with open("./json_logs/" + filename + '.json', 'w') as outfile:
         #        "text" : "hello"}
         # time.sleep(1)
         # json_parsed_dict.append(dict_entry)
-        while output != "":
+        while output != " ":
             output = ser.read(19)
             msg = output[1:13]
             time = output[13:18]
@@ -33,13 +33,13 @@ with open("./json_logs/" + filename + '.json', 'w') as outfile:
                 # print("fuck")
                 dict_entry = {"msg" : str(msg), "time" : str(time)}
                 json.dump(dict_entry, outfile)
-                outfile.write('\n')
+                # outfile.write('\n')
             else:
                 print("Something went wrong")
-            print(output[18])
+            #print(output[18])
         output = " "
-        print("hello")
-        json.dump(dict_entry, outfile)
+        # print("hello")
+        # json.dump(dict_entry, outfile)
 
 
 
