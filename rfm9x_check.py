@@ -12,6 +12,7 @@ import board
 #import adafruit_ssd1306
 # Import the RFM9x radio module.
 import adafruit_rfm9x
+import serial, string
 
 CS = DigitalInOut(board.CE1)
 RESET = DigitalInOut(board.D25)
@@ -26,15 +27,20 @@ rfm9x.tx_power = 20
 prev_packet = None
 
 msg_count = 0;
+output = " "
+ser = serial.Serial('/dev/ttyACM0', 115200, 8, 'N', 1, timeout=1)
 
 while True:
     # packet = rfm9x.receive()
     # ife_string = str(formula_electric)
     data = bytes("ife_string", "utf-8")
-    print ("send " + str(msg_count))
-    rfm9x.send(b'\x34\x34\x34\x34ABC TEST !!!')     
-    msg_count = msg_count + 1
-    time.sleep(1)
+    output = ser.readline()
+    if output != " ":
+        print ("send " + str(msg_count))
+        rfm9x.send(output)     
+        msg_count = msg_count + 1
+        output = " "
+        # time.sleep(1)
 
 
 #while True:
