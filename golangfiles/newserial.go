@@ -10,7 +10,6 @@ import (
 		"path/filepath"
 		"time"
 		"strings"
-//		"encoding/json"
 		"go.bug.st/serial.v1"
 		"go.bug.st/serial.v1/enumerator"
 )
@@ -80,10 +79,11 @@ func main(){
 		if err != nil{log.Println("failed to create file")}
 		defer file.Close()
 		
-		var can_log bool = false
-		var accel_log bool = false //are 
-		var cool_log = false //are thermistors logging
-		
+		var can_log bool = false //is can logging
+		var accel_log bool = false //is accelerometer logging
+		var cool_log bool  = false //are thermistors logging
+		var sps_log bool = false //is sps logging
+
 		for {
 				msgBytes, err = serReader.ReadBytes('\n')	
 				if (err != nil){
@@ -101,8 +101,11 @@ func main(){
 						comfile.WriteString("Cooling loop logging\n")
 						cool_log = true
 						fmt.Println("cool logging")
+					}else if (!sps_log && string(msgBytes[0]) == "7"){
+						comfile.WriteString("Steering logging\n")
+						sps_log = true
+						fmt.Println("sps logging")
 					}
-
 					msgStr := strings.TrimRight(string(msgBytes), "\r\n")
 					now := time.Now()
 					dateString = now.Format(" 03:04:05.000\n")
