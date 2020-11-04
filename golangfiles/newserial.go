@@ -34,7 +34,7 @@ func main(){
 		fmt.Printf("Found %d ports\n", len(ports))
 		for _, portcheck := range ports{
 			//fmt.Printf("found port: %s\n", portcheck.VID)
-			if (portcheck.VID == "16c0"){
+			if (portcheck.SerialNumber == "6416810"){
 				port, err = serial.Open(portcheck.Name, mode)
 				//fmt.Println("found teensy")
 			}
